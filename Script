@@ -1,0 +1,155 @@
+## Project:  STA 215, Fall 2023, Final Project
+# Located:   Cupit TCNJ Google Drive
+# File Name: STA215-CUPIT.R
+# Date:      2023_11_30
+# Who:       Ben W. Cupit
+
+
+
+## Load packages
+# NOTE: Run base.R if these commands return an error!
+library(readr)
+library(dplyr)
+library(tidytext)
+library(tidyverse)
+library(ggplot2)
+library(haven)
+library(forcats)
+library(psych)
+
+# Load data 
+data <- read_delim("raw_data.csv")
+
+
+##################################################################################
+###############                STEP 1: Table 1                ####################   
+##################################################################################
+
+## Qualitative Variable 1 - Passage of the Bechdel Test
+
+mean(data$`Passage of Bechdel Test`, na.rm = TRUE)
+sd(data$`Passage of Bechdel Test`, na.rm = TRUE)
+table(data$`Passage of Bechdel Test`)
+describe(data$`Passage of Bechdel Test`, na.rm = TRUE)
+summary(data$`Passage of Bechdel Test`)
+
+## Qualitative Variable 2 - Plot is Meaningfully Driven Forward by a Female
+
+mean(data$`Plot is Meaningfully Driven Forward by a Female`, na.rm = TRUE)
+sd(data$`Plot is Meaningfully Driven Forward by a Female`, na.rm = TRUE)
+table(data$`Plot is Meaningfully Driven Forward by a Female`)
+describe(data$`Plot is Meaningfully Driven Forward by a Female`, na.rm = TRUE)
+summary(data$`Plot is Meaningfully Driven Forward by a Female`)
+
+## Quantitative Variable 1 - Number of Named Female Leads
+
+mean(data$`Number of Named Female Leads`, na.rm = TRUE)
+sd(data$`Number of Named Female Leads`, na.rm = TRUE)
+table(data$`Number of Named Female Leads`)
+describe(data$`Number of Named Female Leads`, na.rm = TRUE)
+summary(data$`Number of Named Female Leads`)
+
+## Quantitative Variable 2 - Ratio of Female-Male Characters
+
+mean(data$`Ratio of Female-Male Characters`, na.rm = TRUE)
+sd(data$`Ratio of Female-Male Characters`, na.rm = TRUE)
+table(data$`Ratio of Female-Male Characters`)
+describe(data$`Ratio of Female-Male Characters` ,na.rm = TRUE)
+summary(data$`Ratio of Female-Male Characters`)
+
+
+##################################################################################
+####################             STEP 2: Table  2             ####################   
+##################################################################################
+
+## Contingency Table of Qualitative Variables
+
+table(data$`Passage of Bechdel Test`, data$`Plot is Meaningfully Driven Forward by a Female`)
+
+
+##################################################################################
+####################        STEP 3: Chi squared test          ####################   
+##################################################################################
+
+## Chi Squared Test of Qualitative Variables
+
+chisq.test(table(data$`Passage of Bechdel Test`, data$`Plot is Meaningfully Driven Forward by a Female`))
+
+
+##################################################################################
+####################             STEP 4: ANOVA                ####################   
+##################################################################################
+
+## ANOVA of Qualitative Variable 1 and Quantitative Variable 1
+
+anova <- aov(data$`Passage of Bechdel Test` ~ data$`Number of Named Female Leads`)
+
+## Summarize ANOVA results
+
+summary(anova)
+
+
+##################################################################################
+####################          STEP 5: Correlation             ####################   
+##################################################################################
+
+## Create a data frame
+
+gender_table <- data.frame(data$`Number of Named Female Leads`, data$`Ratio of Female-Male Characters`)
+
+## Print the table
+
+gender_table
+
+## Examine the scatter plot  
+
+plot(gender_table)       
+
+## Calculate the Correlation 
+
+cor(gender_table)
+
+
+##################################################################################
+####################        STEP 6: Linear Regression         ####################   
+##################################################################################
+
+## Calculate linear regression line of Quantitative Variable 1 and Quantitative Variable 2
+
+linear_relationship <- lm(data$`Ratio of Female-Male Characters` ~ data$`Number of Named Female Leads`, data = gender_table)
+summary(linear_relationship)
+
+
+##################################################################################
+####################             STEP 7: Figure 1             ####################   
+##################################################################################
+
+## Establish scatter plot
+
+linear_plot <- plot(data$`Number of Named Female Leads`, data$`Ratio of Female-Male Characters`)
+print(linear_plot)
+
+## Add the linear regression line to the scatter plot
+
+abline(linear_relationship, col = "red")
+
+## Establish y-value mean
+
+abline(h=mean(data$`Ratio of Female-Male Characters`), col = "blue")
+
+## Establish x-value mean
+
+abline(v=mean(data$`Number of Named Female Leads`), col = "green")
+
+
+##################################################################################
+####################         STEP 8: Examine residuals        ####################   
+##################################################################################
+
+## Plot the Residuals
+
+plot(data$`Number of Named Female Leads`, residuals(linear_relationship))
+
+## Add a horizontal line at zero to indicate the baseline
+
+abline(h = 0, col = "red")
