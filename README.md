@@ -1,2 +1,14 @@
 # STA-215-Final-Project---Gender-and-Film
-This project looks at how gender is represented in popular films under a number of lenses: number of female named characters, ratio of female-to-male characters, whether or not films pass the Bechdel Test, and whether or not females within the movie meaningfully move the plot forward. 
+This project looks at how gender is represented in popular films under a number of lenses: number of female named characters, ratio of female-to-male characters, whether or not films pass the Bechdel Test, and whether or not females within the movie meaningfully move the plot forward.  
+
+The first variable is the Passage of the Bechdel Test. The Bechdel Test is the idea that a movie must have two named female characters interact with one another and talk about something besides a man. This variable will be qualitative, with the movies receiving a “Pass” state if there is at least one scene within the film that fulfills the requirements. The movies will receive a “Fail” state if there is not a single scene in the film that fulfills these requirements. “Pass” can be assigned a value of 1 in the codebook, while “Fail” can be assigned a value of 2. 
+
+A second qualitative variable is whether or not the Plot is Meaningfully Driven Forward by a Female Character. This will be determined by seeing whether any major plot point found at any point within one of the films is due to a decision made by a female character. An answer of “Yes” (which can be listed as a 1 in the codebook) will be marked if a female character makes an active decision that impacts the plot. An answer of “No” (listed as a 2 in the codebook) will be marked down if the plot is not driven forward at any point by an active decision from a female character.
+
+The first quantitative variable is the Number of Named Female Leads within any given movie. This will be a quantitative variable that starts at 0 (when there are no named female leads) and increases by integers of 1 (0, 1, 2, etc) whenever a named female character appears in the film, with the total amount being finalized with the completion of the film. 
+
+The second quantitative variable is the Ratio of Female-Male Characters. Starting at 0 (no female characters) and ranging to 1 (all-female casting), this variable will be stored as a decimal that demonstrates the number of female characters divided by the total number of characters in the film to see the ratio of female characters to their male counterparts. 
+
+The base data for this project (stored here as "raw_data.csv") was taken from the top 40 fiction feature films from Metacritic (documentaries or short film series were excluded), with all observations being marked down during different showings of each film. 
+
+The Script file is a script coded in R that takes the data from raw_data.csv and analyzes it by finding the mean and SD of each variable, the Chi-Squared of two qualitative variables, the ANOVA of a quantiative and qualitative variable, and a scatter plot (including linear regression line and x- and y- means) of two quantitative variables.
